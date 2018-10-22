@@ -1,0 +1,2 @@
+#!/bin/sh
+python pyauto_script.py -d $1 -u $2 --host $3 -n $4 -p $5

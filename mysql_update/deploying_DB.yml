@@ -1,0 +1,20 @@
+- hosts: databases
+  become: yes
+  tasks:
+    - name: Ensure that MariaDB is installed 
+      yum: name='{{ item }}' state=present
+      with_items:
+        -mariadb-server
+        -MySQL-python
+    - name: Ensure that MariaDB is started and enabled
+      service: name=mariadb state=started enabled=yes
+    - name: Set the initially admin password
+      mysql_user: 
+        name: root
+        password: admin
+        state: present
+    - name: Upload the .my.cnf file to save credentials
+      copy: my.cnf
+      dest: /root/.my.cnf
+      owner: root
+      mode: 0600
